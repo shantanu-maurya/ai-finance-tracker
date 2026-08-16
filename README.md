@@ -4,8 +4,11 @@ A full-stack MERN application that turns raw income and expense entries into
 categorised insights, budgets with live progress tracking, AI-generated
 recommendations, a spending forecast, and downloadable PDF reports.
 
-**Live demo:** _add your Vercel URL here after deploying_
-**API:** _add your Render URL here after deploying_
+**Live demo:** https://ai-finance-tracker-sable-gamma.vercel.app
+**API health check:** https://ai-finance-tracker-api-5flo.onrender.com/health
+
+> The API runs on a free tier that sleeps after ~15 minutes of inactivity, so the
+> first request after a pause can take 30–50 seconds. Subsequent requests are fast.
 
 ---
 
