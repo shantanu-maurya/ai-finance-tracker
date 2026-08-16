@@ -36,19 +36,30 @@ const app = express();
 // ---- Security & parsing ---------------------------------------------------
 app.use(helmet());
 
+// A trailing slash is the classic CORS footgun: the browser sends
+// "https://site.com" as the Origin, never "https://site.com/", so a stored
+// value with a slash silently matches nothing.
+const normaliseOrigin = (value) => (value || '').trim().replace(/\/+$/, '');
+
+// FRONTEND_URL accepts a comma-separated list, because a project usually has
+// more than one legitimate front door - a production alias plus per-deploy
+// preview URLs.
 const allowedOrigins = [
-  process.env.FRONTEND_URL,
+  ...(process.env.FRONTEND_URL || '').split(','),
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'http://localhost:3000'
-].filter(Boolean);
+]
+  .map(normaliseOrigin)
+  .filter(Boolean);
 
 app.use(
   cors({
     origin(origin, callback) {
       // No Origin header => curl, Postman, same-origin, or a server-to-server
       // call. Those are allowed; browsers always send one.
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(normaliseOrigin(origin))) return callback(null, true);
       return callback(new Error(`Origin ${origin} is not allowed by CORS`));
     },
     credentials: true
