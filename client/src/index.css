@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-plane text-ink font-sans antialiased;
+  }
+
+  /* Axis ticks and table columns align only with tabular figures. Large
+     standalone numbers keep the default proportional figures. */
+  .recharts-cartesian-axis-tick text,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-hairline bg-surface p-5 shadow-card;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink-secondary;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-hairline bg-white px-3 py-2 text-sm text-ink
+           placeholder:text-ink-muted focus:border-primary-500 focus:outline-none
+           focus:ring-2 focus:ring-primary-500/20 disabled:cursor-not-allowed disabled:bg-plane;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm
+           font-medium transition-colors focus:outline-none focus:ring-2
+           focus:ring-primary-500/30 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-500 text-white hover:bg-primary-600;
+  }
+
+  .btn-ghost {
+    @apply btn border border-hairline bg-surface text-ink-secondary hover:bg-plane;
+  }
+
+  .btn-danger {
+    @apply btn border border-critical/30 bg-white text-critical hover:bg-critical/5;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium;
+  }
+}

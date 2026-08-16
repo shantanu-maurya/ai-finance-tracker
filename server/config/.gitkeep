@@ -1,0 +1,2 @@
+# Reserved for future config helpers (mailer, storage, feature flags).
+# The database connection lives in server/app.js as connectDB().

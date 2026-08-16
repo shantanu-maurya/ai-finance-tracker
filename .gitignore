@@ -1,0 +1,24 @@
+node_modules/
+.env
+dist/
+.DS_Store
+*.log
+
+# Build / tooling noise
+.vite/
+coverage/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / local tooling
+.vscode/
+.idea/
+.claude/
+*.swp
+
+# Course brief and source material - kept locally, not part of the portfolio repo
+Building an AI-Powered Finance Tracker.pdf
+Project1_AI_Finance_Tracker_BuildDoc.md
