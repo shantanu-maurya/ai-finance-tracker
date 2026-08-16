@@ -9,8 +9,11 @@ const startServer = async () => {
     // requests it cannot fulfil.
     await connectDB();
 
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+    // 0.0.0.0 is required by container hosts like Render, which route
+    // external traffic to the container's public interface. Binding only to
+    // localhost would leave the health check with nothing to talk to.
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on port ${PORT}`);
       console.log(`Health check:      http://localhost:${PORT}/health`);
       console.log(
         `AI insights:       ${
