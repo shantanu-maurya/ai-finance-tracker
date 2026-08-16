@@ -11,6 +11,7 @@ import budgetRoutes from './routes/budgetRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
+import { hasOpenAIKey } from './services/aiService.js';
 
 /**
  * Connects Mongoose to MongoDB. The error is rethrown rather than swallowed so
@@ -81,10 +82,9 @@ app.get('/health', (req, res) => {
     success: true,
     status: 'ok',
     database: states[mongoose.connection.readyState] || 'unknown',
-    aiProvider: process.env.OPENAI_API_KEY?.startsWith('sk-') &&
-      process.env.OPENAI_API_KEY !== 'sk-your_openai_api_key_here'
-      ? 'openai'
-      : 'heuristic',
+    // Reuses aiService's own check so /health can never claim a provider
+    // the insights endpoint would not actually use.
+    aiProvider: hasOpenAIKey() ? 'openai' : 'heuristic',
     timestamp: new Date().toISOString()
   });
 });

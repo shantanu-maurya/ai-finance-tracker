@@ -26,9 +26,14 @@ const PLACEHOLDER_KEYS = new Set([
   'changeme'
 ]);
 
-const hasOpenAIKey = () => {
+/**
+ * The single authority on whether a usable OpenAI key is configured.
+ * Exported so the /health endpoint reports the same answer this service
+ * acts on - two copies of this check will eventually disagree.
+ */
+export const hasOpenAIKey = () => {
   const key = (process.env.OPENAI_API_KEY || '').trim();
-  return Boolean(key) && !PLACEHOLDER_KEYS.has(key);
+  return Boolean(key) && !PLACEHOLDER_KEYS.has(key) && key.startsWith('sk-');
 };
 
 /** Builds the prompt from summary numbers only - no transaction rows. */
